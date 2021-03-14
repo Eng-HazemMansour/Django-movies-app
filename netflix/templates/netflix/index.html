@@ -7,13 +7,29 @@
 </head>
 <body>
     <h1>ALL MOVIES</h1>
+
+
+<div>
+{% if perms.Netflix %}
+    <p>You have permission to do something in the Netflix app.</p>
+    {% if perms.netflix.view_movie %}
+        <p>You can view the movie!</p>
+    {% endif %}
+    {% else %}
+    <p>You don't have permission to do anything in the Netflix app.</p>
+{% endif %}
+</div>
+
+
     <ul>
         {% for movie in movies %}
         <img src="{{ movie.poster.url }}" alt="">
         <div>
             Movie name: {{ movie.title }}<br>
             Movie desc: {{ movie.overview }}<br>
-            Movie category: {{ movie.categories }}
+            {% for category in movie.categories.all %}
+            Movie category: {{ category.name }}
+            {% endfor %}
         </div>
         {% endfor %}
     </ul>
