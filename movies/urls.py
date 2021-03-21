@@ -15,12 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from rest_framework import routers
+from netflix.api.views import MovieViewSet
+
+router = routers.DefaultRouter()
+router.register("films/", include(router.urls), basename="movies")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include("django.contrib.auth.urls")),
     path('accounts/', include("accounts.urls")),
-    path('movies/', include("netflix.urls")),
+    # path('movies/', include("netflix.urls")),
+    path('api/movies/', include("netflix.api.urls")),
+    # path('api/films/', include(router.urls)), (ERROR IN THIS LINE)
 ]
 
 
